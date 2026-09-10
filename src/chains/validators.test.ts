@@ -1,0 +1,3 @@
+import { describe, expect, it } from 'vitest';
+import { isBitcoinAddress, isSolanaAddress, isXrpAddress } from './validators';
+describe('chain address validators',()=>{it('keeps Bitcoin legacy case-sensitive',()=>{expect(isBitcoinAddress('1A1zP1eP5QGefi2DMPTfTL5SLmv7DivfNa')).toBe(true);expect(isBitcoinAddress('1A1zP1eP5QGefi2DMPTfTL5SLmv7DivfN0')).toBe(false)});it('validates Solana byte-length base58 keys',()=>{expect(isSolanaAddress('11111111111111111111111111111111')).toBe(true);expect(isSolanaAddress('not-a-key')).toBe(false)});it('validates classic XRP addresses',()=>{expect(isXrpAddress('rG1QQv2nh2gr7RCZ1P8YYcBUKCCN633jCn')).toBe(true);expect(isXrpAddress('xG1QQv2nh2gr7RCZ1P8YYcBUKCCN633jCn')).toBe(false)})});
