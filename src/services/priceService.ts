@@ -1,3 +1,3 @@
-const COINS: Record<string,string>={bitcoin:'bitcoin',solana:'solana',xrp:'ripple'};
+const COINS: Record<string,string>={bitcoin:'bitcoin',solana:'solana',xrp:'ripple',ethereum:'ethereum'};
 let cached:{at:number; prices:Record<string,number>}|null=null;
 export async function getPrices(ids:string[]):Promise<Record<string,number>>{ if(cached&&Date.now()-cached.at<60_000)return Object.fromEntries(ids.map(id=>[id,cached!.prices[id]])); const q=ids.map(id=>COINS[id]||id).join(','); try{const r=await fetch(`https://api.coingecko.com/api/v3/simple/price?ids=${q}&vs_currencies=usd`); if(!r.ok)throw new Error('Price service unavailable'); const data=await r.json() as Record<string,{usd?:number}>; const prices=Object.fromEntries(Object.entries(COINS).map(([id,coin])=>[id,data[coin]?.usd??0])); cached={at:Date.now(),prices}; return Object.fromEntries(ids.map(id=>[id,prices[id]]));}catch{return {};}}
