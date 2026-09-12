@@ -4,4 +4,5 @@ function decode58(s:string):Uint8Array{if(/^1+$/.test(s))return new Uint8Array(s
 export function isSolanaAddress(s:string):boolean{try{const t=s.trim();return t.length>=32&&t.length<=44&&decode58(t).length===32;}catch{return false;}}
 export function isBitcoinAddress(s:string):boolean{const t=s.trim();return /^(bc1|tb1|bcrt1)[ac-hj-np-z02-9]{11,87}$/.test(t.toLowerCase())||/^[13mn2][1-9A-HJ-NP-Za-km-z]{25,34}$/.test(t);}
 export function isXrpAddress(s:string):boolean{try{return isValidClassicAddress(s.trim());}catch{return false;}}
+export function isEthereumAddress(s:string):boolean{return /^0x[a-fA-F0-9]{40}$/.test(s.trim());}
 export const short=(s:string)=>s.length>18?`${s.slice(0,8)}…${s.slice(-6)}`:s;
